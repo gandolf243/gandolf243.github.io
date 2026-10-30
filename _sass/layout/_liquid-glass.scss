@@ -1,47 +1,55 @@
 /*
  * Liquid-glass inspired theme layer.
- * The solid-color fallback is the default; blur is progressive enhancement.
+ * White and black page canvases; translucent panels use blur and a refractive rim.
  */
 
 :root {
-  --glass-page: #edf3f7;
-  --glass-panel: rgba(255, 255, 255, 0.82);
-  --glass-panel-solid: #f8fbfd;
-  --glass-nav: rgba(255, 255, 255, 0.94);
-  --glass-line: rgba(62, 91, 112, 0.20);
-  --glass-shadow: 0 12px 36px rgba(35, 58, 76, 0.12);
-  --glass-shadow-hover: 0 16px 42px rgba(35, 58, 76, 0.18);
+  --glass-page: #ffffff;
+  --glass-panel: rgba(255, 255, 255, 0.58);
+  --glass-panel-solid: rgba(255, 255, 255, 0.96);
+  --glass-nav: rgba(255, 255, 255, 0.62);
+  --glass-line: rgba(105, 132, 158, 0.22);
+  --glass-shadow: 0 12px 36px rgba(25, 45, 65, 0.10);
+  --glass-shadow-hover: 0 16px 42px rgba(25, 45, 65, 0.16);
   --glass-radius: 18px;
+  --glass-edge-a: rgba(255, 255, 255, 0.98);
+  --glass-edge-b: rgba(103, 205, 255, 0.92);
+  --glass-edge-c: rgba(178, 143, 255, 0.86);
+  --glass-edge-d: rgba(255, 164, 207, 0.82);
 }
 
 html[data-theme="dark"] {
-  --glass-page: #202831;
-  --glass-panel: rgba(43, 54, 65, 0.88);
-  --glass-panel-solid: #2b3641;
-  --glass-nav: rgba(35, 45, 55, 0.96);
-  --glass-line: rgba(220, 235, 245, 0.17);
-  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
-  --glass-shadow-hover: 0 16px 42px rgba(0, 0, 0, 0.38);
+  --glass-page: #000000;
+  --glass-panel: rgba(255, 255, 255, 0.075);
+  --glass-panel-solid: rgba(16, 16, 18, 0.96);
+  --glass-nav: rgba(0, 0, 0, 0.58);
+  --glass-line: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.42);
+  --glass-shadow-hover: 0 16px 42px rgba(0, 0, 0, 0.56);
+  --glass-edge-a: rgba(255, 255, 255, 0.72);
+  --glass-edge-b: rgba(79, 190, 255, 0.92);
+  --glass-edge-c: rgba(167, 126, 255, 0.88);
+  --glass-edge-d: rgba(255, 126, 190, 0.82);
 }
 
-/* Visible even when backdrop-filter is unavailable. */
+/* Keep the page canvas strictly white or black in both themes. */
 html,
 body {
   min-height: 100%;
 }
 
 body {
-  background-color: var(--glass-page);
-  background-image:
-    radial-gradient(ellipse at 12% 4%, rgba(76, 166, 198, 0.20), transparent 38%),
-    radial-gradient(ellipse at 88% 22%, rgba(112, 137, 190, 0.16), transparent 42%);
+  background: var(--glass-page);
+  background-image: none;
   background-attachment: fixed;
 }
 
 .masthead {
+  position: relative;
+  isolation: isolate;
   background: var(--glass-nav);
   border-bottom: 1px solid var(--glass-line);
-  box-shadow: 0 5px 24px rgba(25, 45, 62, 0.10);
+  box-shadow: 0 5px 24px rgba(25, 45, 62, 0.08);
 }
 
 .masthead::after {
@@ -55,19 +63,50 @@ body {
 }
 
 .greedy-nav .hidden-links {
+  position: relative;
+  isolation: isolate;
   background: var(--glass-panel-solid);
   border: 1px solid var(--glass-line);
   border-radius: 14px;
   box-shadow: var(--glass-shadow);
 }
 
+/* Shared multicolor rim: a masked gradient border, not a browser-specific filter. */
+.masthead::before,
+.greedy-nav .hidden-links::before,
+.page .page__inner-wrap::before,
+.sidebar .author__urls::before,
+.toc::before,
+.archive__item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1.25px;
+  border-radius: inherit;
+  background: linear-gradient(
+    132deg,
+    var(--glass-edge-a) 0%,
+    var(--glass-edge-b) 23%,
+    rgba(255, 255, 255, 0.14) 43%,
+    var(--glass-edge-c) 67%,
+    var(--glass-edge-d) 84%,
+    var(--glass-edge-a) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 /* Single-page layout: this is the actual content wrapper in single.html. */
 .page .page__inner-wrap {
-  background: var(--glass-panel-solid);
+  position: relative;
+  isolation: isolate;
   background: var(--glass-panel);
   border: 1px solid var(--glass-line);
   border-radius: var(--glass-radius);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.22);
   padding: clamp(1.15rem, 2.8vw, 2.25rem);
 }
 
@@ -81,13 +120,14 @@ body {
 
 /* Sidebar and contents panel */
 .sidebar .author__urls,
-.sidebar .author__urls-wrapper,
 .toc {
+  position: relative;
+  isolation: isolate;
   border-radius: 14px;
 }
 
 .sidebar .author__urls {
-  background: var(--glass-panel-solid);
+  background: var(--glass-panel);
   border: 1px solid var(--glass-line);
   box-shadow: var(--glass-shadow);
   padding: 0.8rem;
@@ -105,11 +145,13 @@ body {
 
 /* Archive and collection entries */
 .archive__item {
+  position: relative;
+  isolation: isolate;
   padding: 1rem;
   background: var(--glass-panel);
   border: 1px solid var(--glass-line);
   border-radius: 14px;
-  box-shadow: 0 5px 20px rgba(35, 58, 76, 0.08);
+  box-shadow: var(--glass-shadow);
   transition: box-shadow 0.18s ease, transform 0.18s ease;
 }
 
@@ -165,7 +207,7 @@ div.highlighter-rouge,
 figure.highlight {
   border: 1px solid var(--glass-line);
   border-radius: 12px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 pre {
@@ -190,7 +232,7 @@ td {
   border-color: var(--glass-line);
 }
 
-/* Optional blur: never required for readable surfaces or navigation. */
+/* Blur is progressive enhancement; solid translucent fallbacks remain readable. */
 @supports (backdrop-filter: blur(1px)) {
   .masthead,
   .page .page__inner-wrap,
@@ -198,8 +240,8 @@ td {
   .toc,
   .greedy-nav .hidden-links,
   .archive__item {
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(165%);
+    backdrop-filter: blur(24px) saturate(165%);
   }
 }
 
