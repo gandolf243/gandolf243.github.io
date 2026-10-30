@@ -1,6 +1,6 @@
 /*
  * Liquid-glass inspired theme layer.
- * White and black page canvases; translucent panels use blur and a refractive rim.
+ * White and black page canvases; translucent panels use blur and subtle neutral highlights.
  */
 
 :root {
@@ -12,10 +12,6 @@
   --glass-shadow: 0 12px 36px rgba(25, 45, 65, 0.10);
   --glass-shadow-hover: 0 16px 42px rgba(25, 45, 65, 0.16);
   --glass-radius: 18px;
-  --glass-edge-a: rgba(255, 255, 255, 0.98);
-  --glass-edge-b: rgba(103, 205, 255, 0.92);
-  --glass-edge-c: rgba(178, 143, 255, 0.86);
-  --glass-edge-d: rgba(255, 164, 207, 0.82);
 }
 
 html[data-theme="dark"] {
@@ -26,10 +22,6 @@ html[data-theme="dark"] {
   --glass-line: rgba(255, 255, 255, 0.18);
   --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.42);
   --glass-shadow-hover: 0 16px 42px rgba(0, 0, 0, 0.56);
-  --glass-edge-a: rgba(255, 255, 255, 0.72);
-  --glass-edge-b: rgba(79, 190, 255, 0.92);
-  --glass-edge-c: rgba(167, 126, 255, 0.88);
-  --glass-edge-d: rgba(255, 126, 190, 0.82);
 }
 
 /* Keep the page canvas strictly white or black in both themes. */
@@ -75,34 +67,6 @@ body {
   border: 1px solid var(--glass-line);
   border-radius: 14px;
   box-shadow: var(--glass-shadow);
-}
-
-/* Shared multicolor rim: a masked gradient border, not a browser-specific filter. */
-.masthead::before,
-.greedy-nav .hidden-links::before,
-.page .page__inner-wrap::before,
-.sidebar .author__urls::before,
-.toc::before,
-.archive__item::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  padding: 1.25px;
-  border-radius: inherit;
-  background: linear-gradient(
-    132deg,
-    var(--glass-edge-a) 0%,
-    var(--glass-edge-b) 23%,
-    rgba(255, 255, 255, 0.14) 43%,
-    var(--glass-edge-c) 67%,
-    var(--glass-edge-d) 84%,
-    var(--glass-edge-a) 100%
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
 }
 
 /* Single-page layout: this is the actual content wrapper in single.html. */
