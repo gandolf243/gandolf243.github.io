@@ -20,11 +20,11 @@
     document.body.appendChild(canvas);
     gl = canvas.getContext('webgl2', {alpha:true, antialias:true, premultipliedAlpha:false});
     if (!gl) throw Error('WebGL 2 unavailable');
-    const vs = \`#version 300 es
+    const vs = `#version 300 es
       in vec2 a_position; uniform vec4 u_rect; uniform vec2 u_resolution; out vec2 v_local;
       void main(){v_local=a_position*.5+.5;vec2 p=u_rect.xy+v_local*u_rect.zw;
-      gl_Position=vec4(p.x/u_resolution.x*2.-1.,1.-p.y/u_resolution.y*2.,0.,1.);}\`;
-    const fs = \`#version 300 es
+      gl_Position=vec4(p.x/u_resolution.x*2.-1.,1.-p.y/u_resolution.y*2.,0.,1.);}`;
+    const fs = `#version 300 es
       precision highp float; uniform sampler2D u_backdrop; uniform vec2 u_resolution,u_size;
       uniform float u_radius,u_dark,u_blurRadius; in vec2 v_local; out vec4 outColor;
       float roundedBox(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+vec2(r);
@@ -52,7 +52,7 @@
       vec3 rc=mix(vec3(.36,.84,1.),vec3(1.,.55,.83),smoothstep(-u_size.y*.42,u_size.y*.42,p.y));
       color+=rc*rim*.34;
       float hi=exp(-pow((edge+4.)/1.6,2.))*smoothstep(-u_size.y*.4,u_size.y*.4,-p.y);
-      color+=vec3(1.)*hi*.38;outColor=vec4(color,1.);}\`;
+      color+=vec3(1.)*hi*.38;outColor=vec4(color,1.);}`;
     program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));
     gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);
     if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
