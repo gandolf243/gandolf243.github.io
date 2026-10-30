@@ -8,35 +8,32 @@ author_profile: true
 
 {% include base_path %}
 
-A list of all the posts and pages found on the site. For you robots out there, there is an [XML version]({{ base_path }}/sitemap.xml) available for digesting as well.
+Only pages linked through the site's navigation and their linked portfolio entries are listed here. The [XML sitemap]({{ base_path }}/sitemap.xml) is available for search engines.
 
+{% assign listed_pages = site.pages | where: "sitemap", true %}
+{% if listed_pages.size > 0 %}
 <h2>Pages</h2>
-{% for post in site.pages %}
-  {% unless post.sitemap == false %}
+{% for post in listed_pages %}
   {% include archive-single.html %}
-  {% endunless %}
 {% endfor %}
+{% endif %}
 
+{% assign listed_posts = site.posts | where: "sitemap", true %}
+{% if listed_posts.size > 0 %}
 <h2>Posts</h2>
-{% for post in site.posts %}
-  {% unless post.sitemap == false %}
+{% for post in listed_posts %}
   {% include archive-single.html %}
-  {% endunless %}
 {% endfor %}
-
-{% capture written_label %}'None'{% endcapture %}
+{% endif %}
 
 {% for collection in site.collections %}
-{% unless collection.output == false or collection.label == "posts" %}
-  {% capture label %}{{ collection.label }}{% endcapture %}
-  {% if label != written_label %}
-  <h2>{{ label }}</h2>
-  {% capture written_label %}{{ label }}{% endcapture %}
-  {% endif %}
-{% endunless %}
-{% for post in collection.docs %}
   {% unless collection.output == false or collection.label == "posts" %}
+    {% assign listed_docs = collection.docs | where: "sitemap", true %}
+    {% if listed_docs.size > 0 %}
+<h2>{{ collection.label }}</h2>
+      {% for post in listed_docs %}
   {% include archive-single.html %}
+      {% endfor %}
+    {% endif %}
   {% endunless %}
-{% endfor %}
 {% endfor %}
