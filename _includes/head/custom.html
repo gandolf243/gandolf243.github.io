@@ -10,9 +10,9 @@
  <link rel="preload" href="{{ base_path }}/assets/css/fontawesome.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="{{ base_path }}/assets/css/fontawesome.css"></noscript>
 
-<!-- Use the circular GitHub profile image as the browser favicon. -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://avatars.githubusercontent.com/u/281135764?v=4"/>
-<link rel="icon" type="image/svg+xml" href="{{ base_path }}/images/favicon.svg"/>
+<!-- Use a raster circular crop of the GitHub profile image for browser compatibility. -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://wsrv.nl/?url=avatars.githubusercontent.com%2Fu%2F281135764%3Fv%3D4&w=256&h=256&fit=cover&mask=circle"/>
+<link rel="icon" type="image/png" href="https://wsrv.nl/?url=avatars.githubusercontent.com%2Fu%2F281135764%3Fv%3D4&w=256&h=256&fit=cover&mask=circle"/>
 <link rel="manifest" href="{{ base_path }}/images/manifest.json"/>
 <meta name="theme-color" content="var(--global-bg-color)"/>
 
