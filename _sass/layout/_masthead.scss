@@ -30,6 +30,10 @@
     padding: 0.5em 1em;
     font-family: $sans-serif-narrow;
 
+    @media screen and (min-width: $sidebar-screen-min-width) {
+      padding-left: 240px;
+    }
+
     @include breakpoint($x-large) {
       max-width: $x-large;
     }
@@ -41,6 +45,32 @@
     a {
       text-decoration: none;
     }
+  }
+}
+
+.masthead__brand {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  height: $masthead-height;
+  display: flex;
+  align-items: center;
+  font-family: $sans-serif-narrow;
+  font-weight: 700;
+  color: var(--global-masthead-link-color);
+  text-decoration: none;
+  z-index: 21;
+
+  &:hover {
+    color: var(--global-masthead-link-color-hover);
+  }
+
+  @media screen and (max-width: #{$sidebar-screen-min-width - 1px}) {
+    position: relative;
+    display: inline-block;
+    height: auto;
+    margin: 0 1em;
+    padding-top: 0.5em;
   }
 }
 
