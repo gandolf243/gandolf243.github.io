@@ -10,9 +10,9 @@ permalink: /images/manifest.json
 	"lang": {{ site.locale | default: "en" | jsonify }},
 	"icons": [
 		{
-			"src": "{{ site.baseurl }}/images/favicon.svg",
-			"sizes": "any",
-			"type": "image/svg+xml",
+			"src": "https://wsrv.nl/?url=avatars.githubusercontent.com%2Fu%2F281135764%3Fv%3D4&w=256&h=256&fit=cover&mask=circle",
+			"sizes": "256x256",
+			"type": "image/png",
 			"purpose": "any maskable"
 		}
 	]
