@@ -1,64 +1,71 @@
 /*
- * Liquid-glass inspired surface styling.
- *
- * Compatibility approach:
- * - Solid/translucent color fills, borders and shadows are the baseline.
- * - Backdrop blur is an optional enhancement, never a requirement.
- * - No JavaScript, external fonts, images, or browser-specific layout APIs.
- * - Existing Jekyll markup and theme variables remain in use.
+ * Liquid-glass inspired theme layer.
+ * The solid-color fallback is the default; blur is progressive enhancement.
  */
 
 :root {
-  --glass-surface: rgba(255, 255, 255, 0.88);
-  --glass-surface-strong: rgba(255, 255, 255, 0.96);
-  --glass-border: rgba(90, 110, 125, 0.20);
-  --glass-highlight: rgba(255, 255, 255, 0.72);
-  --glass-shadow: 0 8px 28px rgba(25, 40, 55, 0.09);
-  --glass-shadow-hover: 0 12px 34px rgba(25, 40, 55, 0.14);
-  --glass-radius: 16px;
+  --glass-page: #edf3f7;
+  --glass-panel: rgba(255, 255, 255, 0.82);
+  --glass-panel-solid: #f8fbfd;
+  --glass-nav: rgba(255, 255, 255, 0.94);
+  --glass-line: rgba(62, 91, 112, 0.20);
+  --glass-shadow: 0 12px 36px rgba(35, 58, 76, 0.12);
+  --glass-shadow-hover: 0 16px 42px rgba(35, 58, 76, 0.18);
+  --glass-radius: 18px;
 }
 
 html[data-theme="dark"] {
-  --glass-surface: rgba(35, 40, 46, 0.90);
-  --glass-surface-strong: rgba(42, 48, 55, 0.97);
-  --glass-border: rgba(220, 235, 245, 0.14);
-  --glass-highlight: rgba(255, 255, 255, 0.10);
-  --glass-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
-  --glass-shadow-hover: 0 12px 34px rgba(0, 0, 0, 0.30);
+  --glass-page: #202831;
+  --glass-panel: rgba(43, 54, 65, 0.88);
+  --glass-panel-solid: #2b3641;
+  --glass-nav: rgba(35, 45, 55, 0.96);
+  --glass-line: rgba(220, 235, 245, 0.17);
+  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  --glass-shadow-hover: 0 16px 42px rgba(0, 0, 0, 0.38);
 }
 
-/* A restrained ambient backdrop; content remains readable without blur. */
+/* Visible even when backdrop-filter is unavailable. */
+html,
 body {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--glass-page);
   background-image:
-    radial-gradient(ellipse at 8% 0%, rgba(82, 173, 200, 0.10), transparent 42%),
-    radial-gradient(ellipse at 92% 18%, rgba(115, 145, 190, 0.08), transparent 38%);
+    radial-gradient(ellipse at 12% 4%, rgba(76, 166, 198, 0.20), transparent 38%),
+    radial-gradient(ellipse at 88% 22%, rgba(112, 137, 190, 0.16), transparent 42%);
   background-attachment: fixed;
 }
 
-/* Floating masthead */
 .masthead {
-  background: var(--glass-surface-strong);
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow: 0 3px 18px rgba(25, 40, 55, 0.06);
+  background: var(--glass-nav);
+  border-bottom: 1px solid var(--glass-line);
+  box-shadow: 0 5px 24px rgba(25, 45, 62, 0.10);
 }
 
 .masthead::after {
   display: none;
 }
 
-.greedy-nav {
-  background: transparent;
-}
-
+.greedy-nav,
 .greedy-nav button,
 .masthead__menu-item {
   background: transparent;
 }
 
-/* Main reading surface: keeps the Markdown content comfortably legible. */
-.page__inner-wrap {
-  background: var(--glass-surface);
-  border: 1px solid var(--glass-border);
+.greedy-nav .hidden-links {
+  background: var(--glass-panel-solid);
+  border: 1px solid var(--glass-line);
+  border-radius: 14px;
+  box-shadow: var(--glass-shadow);
+}
+
+/* Single-page layout: this is the actual content wrapper in single.html. */
+.page .page__inner-wrap {
+  background: var(--glass-panel-solid);
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-line);
   border-radius: var(--glass-radius);
   box-shadow: var(--glass-shadow);
   padding: clamp(1.15rem, 2.8vw, 2.25rem);
@@ -69,34 +76,48 @@ body {
 }
 
 .page__content h2 {
-  border-bottom-color: var(--glass-border);
+  border-bottom-color: var(--glass-line);
 }
 
-/* Sidebar, contents panel and dropdown surfaces */
+/* Sidebar and contents panel */
 .sidebar .author__urls,
-.toc,
-.greedy-nav .hidden-links {
-  background: var(--glass-surface-strong);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius);
-  box-shadow: var(--glass-shadow);
+.sidebar .author__urls-wrapper,
+.toc {
+  border-radius: 14px;
 }
 
 .sidebar .author__urls {
+  background: var(--glass-panel-solid);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--glass-shadow);
   padding: 0.8rem;
 }
 
-.sidebar .author__urls:after {
-  border-bottom-color: var(--glass-surface-strong);
+.sidebar .author__urls::after {
+  border-bottom-color: var(--glass-panel-solid);
 }
 
 .toc {
-  padding: 1rem;
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--glass-shadow);
 }
 
-/* Collection cards and common content blocks */
-.archive__item,
-.archive__item-teaser,
+/* Archive and collection entries */
+.archive__item {
+  padding: 1rem;
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-line);
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(35, 58, 76, 0.08);
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.archive__item:hover {
+  box-shadow: var(--glass-shadow-hover);
+  transform: translateY(-2px);
+}
+
 .notice,
 .notice--primary,
 .notice--info,
@@ -105,22 +126,10 @@ body {
 .notice--danger,
 .page__related,
 .comment {
-  border-radius: 12px;
+  border-radius: 14px;
 }
 
-.archive__item {
-  padding: 1rem;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-surface);
-  box-shadow: 0 4px 16px rgba(25, 40, 55, 0.05);
-}
-
-.archive__item:hover {
-  box-shadow: var(--glass-shadow-hover);
-  transform: translateY(-2px);
-}
-
-/* Buttons and interactive controls */
+/* Controls */
 .btn,
 button,
 input[type="submit"],
@@ -133,14 +142,14 @@ input[type="button"],
 }
 
 .btn {
-  box-shadow: 0 3px 10px rgba(25, 40, 55, 0.08);
+  box-shadow: 0 3px 12px rgba(25, 45, 62, 0.10);
 }
 
 .btn:hover,
 button:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover {
-  box-shadow: 0 5px 16px rgba(25, 40, 55, 0.12);
+  box-shadow: 0 6px 18px rgba(25, 45, 62, 0.16);
   transform: translateY(-1px);
 }
 
@@ -148,16 +157,15 @@ input,
 textarea,
 select {
   border-radius: 10px;
-  border-color: var(--glass-border);
+  border-color: var(--glass-line);
 }
 
-/* Code remains high contrast and scrollable on narrow screens. */
 pre,
 div.highlighter-rouge,
 figure.highlight {
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-line);
   border-radius: 12px;
-  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30);
 }
 
 pre {
@@ -165,41 +173,36 @@ pre {
   overflow-x: auto;
 }
 
-/* Tables use subtle separators rather than heavy boxed cells. */
 table {
   border-collapse: separate;
   border-spacing: 0;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-line);
   border-radius: 12px;
   overflow: hidden;
 }
 
 thead {
-  background: var(--glass-surface);
+  background: var(--glass-panel);
 }
 
 th,
 td {
-  border-color: var(--glass-border);
+  border-color: var(--glass-line);
 }
 
-/*
- * Optional glass enhancement. Browsers without backdrop-filter retain
- * the opaque-enough surfaces, borders and shadows defined above.
- */
-@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+/* Optional blur: never required for readable surfaces or navigation. */
+@supports (backdrop-filter: blur(1px)) {
   .masthead,
-  .page__inner-wrap,
+  .page .page__inner-wrap,
   .sidebar .author__urls,
   .toc,
   .greedy-nav .hidden-links,
   .archive__item {
-    -webkit-backdrop-filter: blur(18px) saturate(135%);
-    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
   }
 }
 
-/* Respect reduced-motion preferences without changing functionality. */
 @media (prefers-reduced-motion: reduce) {
   .archive__item,
   .btn,
@@ -218,11 +221,10 @@ td {
   }
 }
 
-/* Keep the layout comfortable on narrow screens. */
 @media screen and (max-width: 768px) {
-  .page__inner-wrap {
+  .page .page__inner-wrap {
     padding: 1.1rem;
-    border-radius: 13px;
+    border-radius: 14px;
   }
 
   .masthead__inner-wrap {
@@ -236,7 +238,7 @@ td {
     background: #fff;
   }
 
-  .page__inner-wrap {
+  .page .page__inner-wrap {
     background: #fff;
     border: 0;
     box-shadow: none;
