@@ -34,6 +34,7 @@ body {
   background: var(--glass-page);
   background-image: none;
   background-attachment: fixed;
+  padding-bottom: 6rem;
 }
 
 .masthead {
@@ -52,6 +53,26 @@ body {
 
 .masthead::after {
   display: none;
+}
+
+/* Keep the footer docked like a bottom navigation bar on every screen size. */
+.page__footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  float: none;
+  width: 100%;
+  margin: 0;
+  background: var(--glass-nav);
+  border-top: 1px solid var(--glass-line);
+  box-shadow: 0 -5px 24px rgba(25, 45, 62, 0.08);
+}
+
+.page__footer footer {
+  margin-top: 0;
+  padding: 0.45rem 1rem calc(0.55rem + env(safe-area-inset-bottom));
 }
 
 .greedy-nav,
@@ -205,6 +226,7 @@ td {
 /* Blur is progressive enhancement; solid translucent fallbacks remain readable. */
 @supports (backdrop-filter: blur(1px)) {
   .masthead,
+  .page__footer,
   .page .page__inner-wrap,
   .sidebar .author__urls,
   .toc,
@@ -248,6 +270,16 @@ td {
 @media print {
   body {
     background: #fff;
+    padding-bottom: 0;
+  }
+
+  .page__footer {
+    position: static;
+    background: #fff;
+    border: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .page .page__inner-wrap {
