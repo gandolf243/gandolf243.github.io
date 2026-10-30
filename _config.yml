@@ -239,7 +239,7 @@ defaults:
       path: ""
       type: posts
     values:
-      layout: single
+      sitemap: false\n      layout: single
       author_profile: true
       read_time: true
       comments: true
@@ -250,14 +250,14 @@ defaults:
       path: ""
       type: pages
     values:
-      layout: single
+      sitemap: false\n      layout: single
       author_profile: true
   # _teaching
   - scope:
       path: ""
       type: teaching
     values:
-      layout: single
+      sitemap: false\n      layout: single
       author_profile: true
       share: true
       comments: true
@@ -266,7 +266,7 @@ defaults:
       path: ""
       type: publications
     values:
-      layout: single
+      sitemap: false\n      layout: single
       author_profile: true
       share: true
       comments: true
@@ -275,7 +275,7 @@ defaults:
       path: ""
       type: portfolio
     values:
-      layout: single
+      sitemap: false\n      layout: single
       author_profile: true
       share: true
       comment: true
@@ -284,7 +284,7 @@ defaults:
       path: ""
       type: talks
     values:
-      layout: talk
+      sitemap: false\n      layout: talk
       author_profile: true
       share: true
 
