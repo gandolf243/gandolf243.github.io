@@ -1,4 +1,5 @@
 ---
+sitemap: true
 permalink: /
 title: "Gandolf243 About"
 author_profile: true
