@@ -45,8 +45,14 @@ body {
 }
 
 .masthead {
-  position: fixed;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
   isolation: isolate;
+  animation: none !important;
+  -webkit-animation: none !important;
   background: var(--glass-nav);
   border-bottom: 1px solid var(--glass-line);
   box-shadow: 0 5px 24px rgba(25, 45, 62, 0.08);
