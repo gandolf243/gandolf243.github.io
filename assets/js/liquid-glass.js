@@ -48,9 +48,6 @@
       vec3 z=texture(u_backdrop,clamp(uv+bend-n*.0018,0.,1.)).rgb;
       vec3 color=vec3(r.r,c.g,z.b);vec3 tint=mix(vec3(1.),vec3(.075,.105,.17),u_dark);
       color=mix(color,tint,mix(.075,.16,u_dark));
-      float rim=exp(-pow((edge+1.4)/2.4,2.));
-      vec3 rc=mix(vec3(.36,.84,1.),vec3(1.,.55,.83),smoothstep(-u_size.y*.42,u_size.y*.42,p.y));
-      color+=rc*rim*.34;
       float hi=exp(-pow((edge+4.)/1.6,2.))*smoothstep(-u_size.y*.4,u_size.y*.4,-p.y);
       color+=vec3(1.)*hi*.38;outColor=vec4(color,1.);}`;
     program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));
