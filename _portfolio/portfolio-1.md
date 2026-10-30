@@ -1,4 +1,5 @@
 ---
+sitemap: true
 title: "BridgePatcher"
 excerpt: "An independent community macOS patching project focused on expanding compatibility for unsupported Macs, including T1 and T2 systems."
 collection: portfolio
