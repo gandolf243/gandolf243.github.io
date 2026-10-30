@@ -45,7 +45,7 @@ body {
 }
 
 .masthead {
-  position: relative;
+  position: fixed;
   isolation: isolate;
   background: var(--glass-nav);
   border-bottom: 1px solid var(--glass-line);
