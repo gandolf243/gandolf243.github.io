@@ -9,8 +9,12 @@ author_profile: false
   <div class="archive">
     <h1 class="page__title">{{ page.title }}</h1>
     {% include base_path %}
-    {% for post in page.posts %}
-      {% include archive-single.html %}
-    {% endfor %}
+    {% if page.posts.size > 0 %}
+      {% for post in page.posts %}
+        {% include archive-single.html %}
+      {% endfor %}
+    {% else %}
+      <p class="page__empty">There is nothing here!</p>
+    {% endif %}
   </div>
 </div>
