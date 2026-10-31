@@ -442,3 +442,24 @@
     }
   }
 }
+
+
+/* Keep the theme control at the far right while links use the available space. */
+.greedy-nav .visible-links {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  min-width: 100%;
+}
+
+.greedy-nav .visible-links li {
+  display: block;
+}
+
+.greedy-nav .visible-links #theme-toggle {
+  margin-left: auto;
+}
+
+.greedy-nav button {
+  right: 3rem;
+}
