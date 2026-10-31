@@ -444,22 +444,20 @@
 }
 
 
-/* Keep the theme control at the far right while links use the available space. */
+/* Keep every navigation link visible and align the theme control right. */
 .greedy-nav .visible-links {
   display: flex;
   align-items: center;
-  width: max-content;
+  flex-wrap: nowrap;
+  width: 100%;
   min-width: 100%;
 }
 
 .greedy-nav .visible-links li {
   display: block;
+  flex: 0 0 auto;
 }
 
 .greedy-nav .visible-links #theme-toggle {
   margin-left: auto;
-}
-
-.greedy-nav button {
-  right: 3rem;
 }
