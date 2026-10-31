@@ -19,6 +19,11 @@ layout: default
     {% unless page.header.overlay_color or page.header.overlay_image %}
       <h1 class="page__title">{{ page.title }}</h1>
     {% endunless %}
-    {{ content }}
+    {% assign rendered_page_content = content | strip %}
+    {% if rendered_page_content == "" %}
+      <p class="page__empty">There is nothing here!</p>
+    {% else %}
+      {{ content }}
+    {% endif %}
   </div>
 </div>
