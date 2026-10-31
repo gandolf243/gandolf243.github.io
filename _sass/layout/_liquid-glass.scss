@@ -333,3 +333,10 @@ td {
 }
 
 /* No decorative scene, parallax, or background animation. */
+
+
+.page__empty {
+  margin: 1.5rem 0 0;
+  color: var(--global-text-color-light);
+  font-style: italic;
+}
