@@ -1,12 +1,11 @@
 ---
 sitemap: true
 permalink: /
-title: "Gandolf243 About"
+title: "About Gandolf243"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-Hello! I am Nathanael Cain. I have interest in just about everything tech. 
-This website is still a work in progress, So all the features that you want might not be here. 
+Hello! I am Nathanael Cain. I have interest in just about everything tech. I work on several projects, see the [portfolio](/portfolio) for a list of which projects I am working on.
