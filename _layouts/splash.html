@@ -16,7 +16,12 @@ layout: default
     {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%B %d, %Y" }}">{% endif %}
 
     <section class="page__content" itemprop="text">
-      {{ content }}
+      {% assign rendered_page_content = content | strip %}
+      {% if rendered_page_content == "" %}
+        <p class="page__empty">There is nothing here!</p>
+      {% else %}
+        {{ content }}
+      {% endif %}
     </section>
   </article>
 </div>
