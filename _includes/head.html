@@ -12,5 +12,25 @@
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
 </script>
 
+<!-- Apply the system or saved theme before styles render to avoid a flash. -->
+<script>
+  (function () {
+    try {
+      var preference = localStorage.getItem('theme');
+      var followsSystem = preference !== 'dark' && preference !== 'light';
+      var systemIsDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (preference === 'dark' || (followsSystem && systemIsDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    } catch (error) {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    }
+  })();
+</script>
+
 <!-- For all browsers -->
-<link rel="stylesheet" href="{{ base_path }}/assets/css/main.css?v=liquid-glass-8">
+<link rel="stylesheet" href="{{ base_path }}/assets/css/main.css?v=liquid-glass-9">
