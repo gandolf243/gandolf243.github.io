@@ -41,7 +41,12 @@ layout: default
       {% endunless %}
 
       <section class="page__content" itemprop="text">
-        {{ content }}
+        {% assign rendered_page_content = content | strip %}
+        {% if rendered_page_content == "" %}
+          <p class="page__empty">There is nothing here!</p>
+        {% else %}
+          {{ content }}
+        {% endif %}
         {% if page.link %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
