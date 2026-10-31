@@ -9,20 +9,33 @@
 const PLOTLY_URL = "https://cdn.jsdelivr.net/npm/plotly.js@3.6.0/dist/plotly.min.js";
 const MERMAID_URL = "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 
-// Detect OS/browser preference
-const browserPref = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+// Track the browser's live color-scheme preference.
+const colorSchemeQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
-// Determine the computed theme, which can be "dark" or "light".
+function getThemePreference() {
+  try {
+    return localStorage.getItem("theme");
+  } catch (error) {
+    return null;
+  }
+}
+
+// Determine the computed theme, using the browser preference unless the user chose one.
 function determineComputedTheme() {
-  // Determine the expected state of the theme toggle, which can be "dark", "light", or default "system"
-  let themeSetting = localStorage.getItem("theme");
-  themeSetting = (themeSetting != "dark" && themeSetting != "light" && themeSetting != "system") ? "system" : themeSetting;
-
-  // Return the setting if set, or use the browser preference
-  if (themeSetting != "system") {
+  const themeSetting = getThemePreference();
+  if (themeSetting === "dark" || themeSetting === "light") {
     return themeSetting;
   }
-  return browserPref ? "dark" : "light";
+  return colorSchemeQuery && colorSchemeQuery.matches ? "dark" : "light";
+}
+
+// Apply OS/browser changes only while the theme is set to follow the system.
+function updateThemeFromSystem(event) {
+  const themeSetting = getThemePreference();
+  if (themeSetting !== "dark" && themeSetting !== "light") {
+    setTheme(event.matches ? "dark" : "light");
+    redrawPlotly();
+  }
 }
 
 // Set the theme on page load or when explicitly called. Without an argument the
@@ -43,7 +56,11 @@ function setTheme(theme) {
 function toggleTheme() {
   const current_theme = $("html").attr("data-theme");
   const new_theme = current_theme === "dark" ? "light" : "dark";
-  localStorage.setItem("theme", new_theme);
+  try {
+    localStorage.setItem("theme", new_theme);
+  } catch (error) {
+    // The current page can still use the selected theme if storage is unavailable.
+  }
   setTheme(new_theme);
   redrawPlotly();
 }
@@ -143,12 +160,13 @@ $(document).ready(function () {
 
   // If the user hasn't chosen a theme, follow the OS preference
   setTheme();
-  window.matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener("change", (e) => {
-          if (!localStorage.getItem("theme")) {
-            setTheme(e.matches ? "dark" : "light");
-          }
-        });
+  if (colorSchemeQuery) {
+    if (typeof colorSchemeQuery.addEventListener === "function") {
+      colorSchemeQuery.addEventListener("change", updateThemeFromSystem);
+    } else if (typeof colorSchemeQuery.addListener === "function") {
+      colorSchemeQuery.addListener(updateThemeFromSystem);
+    }
+  }
 
   // Enable the theme toggle
   $('#theme-toggle').on('click', toggleTheme);
