@@ -22,7 +22,12 @@ layout: compress
 
     <div id="main" role="main">
       <div class="container">
-        {{ content }}
+        {% assign rendered_page_content = content | strip %}
+        {% if rendered_page_content == "" %}
+          <p class="page__empty">There is nothing here!</p>
+        {% else %}
+          {{ content }}
+        {% endif %}
       </div>
     </div>
 
